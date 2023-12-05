@@ -1,5 +1,7 @@
 import torch
 import torch.nn as nn
+from torch_geometric.transforms import AddLaplacianEigenvectorPE
+from torch_geometric.data import Data as GraphData
 from torch_geometric.nn import RGCNConv, TransformerConv
 
 import corect
@@ -11,6 +13,9 @@ class GNN(nn.Module):
 
         self.num_modals = num_modals
         
+        if args.use_graph_pe:
+            self.pe = AddLaplacianEigenvectorPE(args.laplacian_k)
+            print("GNN --> Use graph PE")
         if args.gcn_conv == "rgcn":
             print("GNN --> Use RGCN")
             self.conv1 = RGCNConv(g_dim, h1_dim, num_relations)
@@ -26,9 +31,14 @@ class GNN(nn.Module):
 
     def forward(self, node_features, node_type, edge_index, edge_type):
 
+        graph = GraphData(node_features, edge_index)
+
+        if self.args.use_graph_pe:
+            graph = self.pe(graph)
+            
         if self.args.gcn_conv == "rgcn":
-            x = self.conv1(node_features, edge_index, edge_type)
-        
+            # x = self.conv1(node_features, edge_index, edge_type)
+            x = self.conv1(graph.x, graph.edge_index, edge_type)
         if self.args.use_graph_transformer:
             x = nn.functional.leaky_relu(self.bn(self.conv2(x, edge_index)))
         

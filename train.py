@@ -257,6 +257,20 @@ if __name__ == "__main__":
         default=3,
         help="number self attention block"
     )
+    parser.add_argument(
+        "--use_graph_pe",
+        action="store_true",
+        default=False,
+        help="use graph laplacian positional encoding in GNN"
+    )
+
+    parser.add_argument(
+        "--laplacian_k",
+        type=int,
+        default=1,
+        help="number of smallest non-trivial eigenvectors to use for positional encoding"
+    )
+
 
     parser.add_argument("--tag", type=str, default="normalexperiment")
 
@@ -279,13 +293,13 @@ if __name__ == "__main__":
             "v": 35,
         },
     }
-
+    
     log.debug(args)
 
     if args.log_in_comet:
         experiment = corect.Logger(
                 api_key=args.comet_api_key,
-                project_name="rtgraph",
+                project_name="corect_pe",
                 workspace=args.comet_workspace,
                 auto_param_logging=False,
                 auto_metric_logging=False,
