@@ -25,6 +25,7 @@ class Coach:
 
         self.dataset_label_dict = {
             "iemocap": {"hap": 0, "sad": 1, "neu": 2, "ang": 3, "exc": 4, "fru": 5},
+            "iemocap_roberta": {"hap": 0, "sad": 1, "neu": 2, "ang": 3, "exc": 4, "fru": 5},
             "iemocap_4": {"hap": 0, "sad": 1, "neu": 2, "ang": 3},
             "mosei": {"Negative": 0, "Positive": 1},
         }

@@ -47,12 +47,14 @@ class CORECT(nn.Module):
         
         dataset_label_dict = {
             "iemocap": {"hap": 0, "sad": 1, "neu": 2, "ang": 3, "exc": 4, "fru": 5},
+            "iemocap_roberta":{"hap": 0, "sad": 1, "neu": 2, "ang": 3, "exc": 4, "fru": 5},
             "iemocap_4": {"hap": 0, "sad": 1, "neu": 2, "ang": 3},
             "mosei": {"Negative": 0, "Positive": 1},
         }
 
         dataset_speaker_dict = {
             "iemocap": 2,
+            "iemocap_roberta": 2,
             "iemocap_4": 2,
             "mosei":1,
         }

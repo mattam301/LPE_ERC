@@ -12,7 +12,7 @@ class Dataset:
         self.num_batches = math.ceil(len(self.samples) / args.batch_size)
         self.dataset = args.dataset
         self.speaker_to_idx = {"M": 0, "F": 1}
-
+        
         self.embedding_dim = args.dataset_embedding_dims[args.dataset]
 
     def __len__(self):
@@ -59,7 +59,11 @@ class Dataset:
             audio_tensor[i, :cur_len, :] = tmp_a
             visual_tensor[i, :cur_len, :] = tmp_v
 
-            speaker_tensor[i, :cur_len] = torch.tensor(
+            # print(s['speakers'])
+            if self.dataset=="iemocap_roberta":
+                speaker_tensor[i, :cur_len] = torch.tensor(s["speakers"])
+            else:
+                speaker_tensor[i, :cur_len] = torch.tensor(
                     [self.speaker_to_idx[c] for c in s["speakers"]])
 
             labels.extend(s["labels"])

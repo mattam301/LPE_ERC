@@ -67,7 +67,7 @@ if __name__ == "__main__":
         type=str,
         # required=True,
         default="iemocap_4",
-        choices=["iemocap", "iemocap_4","mosei"],
+        choices=["iemocap", "iemocap_4","iemocap_gc","iemocap_roberta","mosei"],
         help="Dataset name.",
     )
 
@@ -286,6 +286,11 @@ if __name__ == "__main__":
             "a": 100,
             "t": 768,
             "v": 512,
+        },
+        "iemocap_roberta": {
+            "a": 512,
+            "t": 768,
+            "v": 1024,
         },
         "mosei": {
             "a": 80,
