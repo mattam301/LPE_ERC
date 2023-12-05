@@ -1,0 +1,4 @@
+numpy
+comet-ml
+torch_geometric
+sentence-transformers

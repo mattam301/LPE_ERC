@@ -1,0 +1,3 @@
+/model_checkpoints/*.pt
+/corect/__pycache__/
+/corect/model/__pycache__/
