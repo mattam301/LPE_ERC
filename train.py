@@ -77,14 +77,14 @@ if __name__ == "__main__":
 
     # Training parameters
     parser.add_argument(
-        "--from_begin", action="store_true", help="Training from begin.", default=False
+        "--from_begin", action="store_true", help="Training from begin.", default=True
     )
 
     parser.add_argument("--device", type=str, default="cuda", help="Computing device.")
     parser.add_argument(
-        "--epochs", default=1, type=int, help="Number of training epochs."
+        "--epochs", default=50, type=int, help="Number of training epochs."
     )
-    parser.add_argument("--batch_size", default=10, type=int, help="Batch size.")
+    parser.add_argument("--batch_size", default=32, type=int, help="Batch size.")
     parser.add_argument(
         "--optimizer",
         type=str,
@@ -208,7 +208,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--use_speaker",
         action="store_true",
-        default=False,
+        default=True,
         help="Use speakers attribute",
     )
 
