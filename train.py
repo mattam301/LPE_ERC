@@ -259,16 +259,24 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--use_graph_pe",
-        action="store_true",
-        default=False,
-        help="use graph laplacian positional encoding in GNN"
+        # action="store_true",
+        type=str,
+        default="none",
+        choices=("laplacian", "rw", "none"),
+        help="type of positional encoding in GNN"
     )
 
     parser.add_argument(
         "--laplacian_k",
         type=int,
-        default=1,
-        help="number of smallest non-trivial eigenvectors to use for positional encoding"
+        default=18,
+        help="number of smallest non-trivial eigenvectors to use for laplacian positional encoding"
+    )
+    parser.add_argument(
+        "--walk_length",
+        type=int,
+        default=18,
+        help="The number of random walk steps"
     )
 
 
