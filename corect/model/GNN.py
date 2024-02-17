@@ -38,7 +38,7 @@ class GNN(nn.Module):
 
         if self.args.use_graph_pe=="laplacian":
             graph = self.pe(graph)
-        if self.use_graph_pe == "rw":
+        if self.args.use_graph_pe == "rw":
             graph = self.pe(graph)
         if self.args.gcn_conv == "rgcn":
             # x = self.conv1(node_features, edge_index, edge_type)
