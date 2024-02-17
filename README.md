@@ -10,8 +10,9 @@ sentence-transformers==2.2.2
 comet-ml==3.33.4
 ```
 
-```
-### Training
+
+## Training
+
 ```
 bash run_train.sh
 ```
