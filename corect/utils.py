@@ -5,7 +5,7 @@ import logging
 import numpy as np
 import torch
 import pickle
-
+from tqdm import tqdm
 
 def set_seed(seed):
     """Sets random seed everywhere."""
@@ -41,3 +41,35 @@ def save_pkl(obj, file):
 def load_pkl(file):
     with open(file, "rb") as f:
         return pickle.load(f)
+
+def load_mosei(emo="7class"):
+    unsplit = load_pkl("data/mosei/mosei_data.pkl")
+
+    data = {
+        "train": [], "dev": [], "test": [],
+    }
+    trainVid = list(unsplit["trainVid"])
+    valVid = list(unsplit["valVid"])
+    testVid = list(unsplit["testVid"])
+    
+    spliter = {
+        "train": trainVid,
+        "dev": valVid,
+        "test": testVid
+    }
+
+    for split in data:
+        for uid in tqdm(spliter[split], desc=split):
+            data[split].append(
+                {
+                    "uid" : uid,
+                    "speakers" : [0] * len(unsplit["speaker"][uid]),
+                    "labels" : unsplit['label'][emo][uid],
+                    "text": unsplit["text"][uid],
+                    "audio": unsplit["audio"][uid],
+                    "visual": unsplit["visual"][uid],
+                    "sentence" : unsplit["sentence"][uid],
+                }
+            )
+    
+    return data

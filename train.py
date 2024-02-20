@@ -15,17 +15,19 @@ def main(args):
             args.data_root,
             args.data_dir_path,
             args.dataset,
-            "data_" + args.dataset + "_" + args.emotion + ".pkl",
+            "data_" + args.dataset + ".pkl",
         )
+        log.debug("Loading data from '%s'." % args.data)
+        data = corect.utils.load_mosei(args.emotion)
     else:
         args.data = os.path.join(
             args.data_root, args.data_dir_path, args.dataset, "data_" + args.dataset + ".pkl"
         )
+        log.debug("Loading data from '%s'." % args.data)
+        data = corect.utils.load_pkl(args.data)
 
     # load data
-    log.debug("Loading data from '%s'." % args.data)
-
-    data = corect.utils.load_pkl(args.data)
+    
     log.info("Loaded data.")
 
     trainset = corect.Dataset(data["train"], args)
@@ -301,9 +303,9 @@ if __name__ == "__main__":
             "v": 1024,
         },
         "mosei": {
-            "a": 80,
+            "a": 512,
             "t": 768,
-            "v": 35,
+            "v": 1024,
         },
     }
     
