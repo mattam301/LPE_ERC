@@ -60,7 +60,7 @@ class Dataset:
             visual_tensor[i, :cur_len, :] = tmp_v
 
             # print(s['speakers'])
-            if self.dataset=="iemocap_roberta" or "mosei":
+            if self.dataset=="iemocap_roberta" or self.dataset=="mosei":
                 speaker_tensor[i, :cur_len] = torch.tensor(s["speakers"])
             else:
                 speaker_tensor[i, :cur_len] = torch.tensor(
