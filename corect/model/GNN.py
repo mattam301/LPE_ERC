@@ -4,6 +4,7 @@ from torch_geometric.transforms import AddLaplacianEigenvectorPE, AddRandomWalkP
 from torch_geometric.data import Data as GraphData
 from torch_geometric.nn import RGCNConv, TransformerConv
 
+from dgl import laplacian_pe
 import corect
 
 class GNN(nn.Module):
@@ -33,7 +34,6 @@ class GNN(nn.Module):
             
 
     def forward(self, node_features, node_type, edge_index, edge_type):
-
         graph = GraphData(node_features, edge_index)
 
         if self.args.use_graph_pe=="laplacian":
