@@ -314,7 +314,7 @@ if __name__ == "__main__":
     if args.log_in_comet:
         experiment = corect.Logger(
                 api_key=args.comet_api_key,
-                project_name="corect_pe",
+                project_name="nckh",
                 workspace=args.comet_workspace,
                 auto_param_logging=False,
                 auto_metric_logging=False,

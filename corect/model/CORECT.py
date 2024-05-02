@@ -7,6 +7,7 @@ from .UnimodalEncoder import UnimodalEncoder
 from .CrossmodalNet import CrossmodalNet
 from .GraphModel import GraphModel
 from .functions import multi_concat, feature_packing
+from .MMT import MMT, MMTLayer, MMAttention
 import corect
 
 log = corect.utils.get_logger()
@@ -35,7 +36,7 @@ class CORECT(nn.Module):
                 ic_dim *= args.graph_transformer_nheads
         
         if args.use_crossmodal and self.n_modals > 1:
-            ic_dim += h_dim * self.n_modals * (self.n_modals - 1)
+            ic_dim += h_dim * self.n_modals
 
         if self.args.no_gnn and (not self.args.use_crossmodal or self.n_modals == 1):
             ic_dim = h_dim * self.n_modals
@@ -83,7 +84,8 @@ class CORECT(nn.Module):
             print('RTGraph --> Use GNN')
 
         if args.use_crossmodal and self.n_modals > 1:
-            self.crossmodal = CrossmodalNet(g_dim, args)
+            # self.crossmodal = CrossmodalNet(g_dim, args)
+            self.crossmodal = MMTLayer(input_dim=[100,100,100], rank = 8, n_modals=3, beta=0.7)
             print('RTGraph --> Use Crossmodal')
         elif self.n_modals == 1:
             print('RTGraph --> Crossmodal not available when number of modalitiy is 1')
@@ -132,8 +134,10 @@ class CORECT(nn.Module):
 
         if self.args.use_crossmodal and self.n_modals > 1:
             out_cr = self.crossmodal(multimodal_features)
-
-            out_cr = out_cr.permute(1, 0, 2)
+            # print((out_cr[2].shape))
+            out_cr = torch.cat(out_cr, dim=2)
+            # print(out_cr.shape)
+            # out_cr = out_cr.permute(1, 0, 2)
             lengths = data['text_len_tensor']
             batch_size = lengths.size(0)
             cr_feat = []
@@ -143,6 +147,10 @@ class CORECT(nn.Module):
 
             cr_feat = torch.cat(cr_feat, dim=0).to(self.device)
             out.append(cr_feat)
+            # print(cr_feat.shape)
+            # print(hihi)
+            
+            # out.append(out_cr)
         
         if self.args.no_gnn and (not self.args.use_crossmodal or self.n_modals == 1):
             out = out_encode
