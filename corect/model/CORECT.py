@@ -85,7 +85,7 @@ class CORECT(nn.Module):
 
         if args.use_crossmodal and self.n_modals > 1:
             # self.crossmodal = CrossmodalNet(g_dim, args)
-            self.crossmodal = MMTLayer(input_dim=[100,100,100], rank = 8, n_modals=3, beta=0.7)
+            self.crossmodal = MMTLayer(input_dim=[100,100,100], rank = 10, n_modals=3, beta=0.7)
             print('RTGraph --> Use Crossmodal')
         elif self.n_modals == 1:
             print('RTGraph --> Crossmodal not available when number of modalitiy is 1')
