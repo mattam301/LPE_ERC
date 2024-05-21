@@ -9,9 +9,9 @@ import numpy as np
 from sklearn import metrics
 from tqdm import tqdm
 
-import corect
+import mat
 
-log = corect.utils.get_logger()
+log = mat.utils.get_logger()
 
 
 def load_pkl(file):
@@ -37,7 +37,7 @@ def main(args):
             "mosei": ["Negative", "Positive"],
         }
     
-    testset = corect.Dataset(data["test"], stored_args)
+    testset = mat.Dataset(data["test"], stored_args)
     idx_labels = dataset_label_dict[args.dataset]
 
     test = True

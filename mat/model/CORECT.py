@@ -8,9 +8,9 @@ from .CrossmodalNet import CrossmodalNet
 from .GraphModel import GraphModel
 from .functions import multi_concat, feature_packing
 from .MMT import MMT, MMTLayer, MMAttention
-import corect
+import mat
 
-log = corect.utils.get_logger()
+log = mat.utils.get_logger()
 
 class CORECT(nn.Module):
     def __init__(self, args):
@@ -35,10 +35,10 @@ class CORECT(nn.Module):
             if args.use_graph_transformer:
                 ic_dim *= args.graph_transformer_nheads
         
-        if args.use_crossmodal and self.n_modals > 1:
+        if args.use_mmt and self.n_modals > 1:
             ic_dim += h_dim * self.n_modals
 
-        if self.args.no_gnn and (not self.args.use_crossmodal or self.n_modals == 1):
+        if self.args.no_gnn and (not self.args.use_mmt or self.n_modals == 1):
             ic_dim = h_dim * self.n_modals
 
         
@@ -83,9 +83,9 @@ class CORECT(nn.Module):
             self.graph_model = GraphModel(g_dim, h_dim, h_dim, self.device, args)
             print('RTGraph --> Use GNN')
 
-        if args.use_crossmodal and self.n_modals > 1:
+        if args.use_mmt and self.n_modals > 1:
             # self.crossmodal = CrossmodalNet(g_dim, args)
-            self.crossmodal = MMTLayer(input_dim=[100,100,100], rank = 11, n_modals=2, beta=0.7)
+            self.crossmodal = MMTLayer(input_dim=[100,100,100], rank = 11, n_modals=3, beta=0.7)
             print('RTGraph --> Use Crossmodal')
         elif self.n_modals == 1:
             print('RTGraph --> Crossmodal not available when number of modalitiy is 1')
@@ -132,7 +132,7 @@ class CORECT(nn.Module):
             out.append(out_graph)
 
 
-        if self.args.use_crossmodal and self.n_modals > 1:
+        if self.args.use_mmt and self.n_modals > 1:
             out_cr = self.crossmodal(multimodal_features)
             # print((out_cr[2].shape))
             out_cr = torch.cat(out_cr, dim=2)
@@ -152,7 +152,7 @@ class CORECT(nn.Module):
             
             # out.append(out_cr)
         
-        if self.args.no_gnn and (not self.args.use_crossmodal or self.n_modals == 1):
+        if self.args.no_gnn and (not self.args.use_mmt or self.n_modals == 1):
             out = out_encode
         else:
             out = torch.cat(out, dim=-1)

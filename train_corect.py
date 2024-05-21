@@ -3,12 +3,12 @@ from comet_ml import Experiment, Optimizer
 import argparse
 import torch
 import os
-import corect
+import mat
 
-log = corect.utils.get_logger()
+log = mat.utils.get_logger()
 
 def main(args):
-    corect.utils.set_seed(args.seed)
+    mat.utils.set_seed(args.seed)
 
     if args.emotion:
         args.data = os.path.join(
@@ -18,31 +18,31 @@ def main(args):
             "data_" + args.dataset + ".pkl",
         )
         log.debug("Loading data from '%s'." % args.data)
-        data = corect.utils.load_mosei(args.emotion)
+        data = mat.utils.load_mosei(args.emotion)
     else:
         args.data = os.path.join(
             args.data_root, args.data_dir_path, args.dataset, "data_" + args.dataset + ".pkl"
         )
         log.debug("Loading data from '%s'." % args.data)
-        data = corect.utils.load_pkl(args.data)
+        data = mat.utils.load_pkl(args.data)
 
     # load data
     
     log.info("Loaded data.")
 
-    trainset = corect.Dataset(data["train"], args)
-    devset = corect.Dataset(data["dev"], args)
-    testset = corect.Dataset(data["test"], args)
+    trainset = mat.Dataset(data["train"], args)
+    devset = mat.Dataset(data["dev"], args)
+    testset = mat.Dataset(data["test"], args)
 
     log.debug("Building model...")
     
     model_file = args.data_root + "/model_checkpoints/model.pt"
-    model = corect.CORECT_real(args).to(args.device)
-    opt = corect.Optim(args.learning_rate, args.max_grad_value, args.weight_decay)
+    model = mat.CORECT_real(args).to(args.device)
+    opt = mat.Optim(args.learning_rate, args.max_grad_value, args.weight_decay)
     opt.set_parameters(model.parameters(), args.optimizer)
     sched = opt.get_scheduler(args.scheduler)
 
-    coach = corect.Coach(trainset, devset, testset, model, opt, sched, args)
+    coach = mat.Coach(trainset, devset, testset, model, opt, sched, args)
     if not args.from_begin:
         ckpt = torch.load(model_file)
         coach.load_ckpt(ckpt)
@@ -312,7 +312,7 @@ if __name__ == "__main__":
     log.debug(args)
 
     if args.log_in_comet:
-        experiment = corect.Logger(
+        experiment = mat.Logger(
                 api_key=args.comet_api_key,
                 project_name="corect",
                 workspace=args.comet_workspace,

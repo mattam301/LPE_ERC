@@ -3,9 +3,9 @@ import torch.nn as nn
 
 import torch.nn.functional as F
 
-import corect
+import mat
 
-log = corect.utils.get_logger()
+log = mat.utils.get_logger()
 
 
 class Classifier(nn.Module):
