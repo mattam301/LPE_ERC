@@ -12,9 +12,9 @@ import corect
 
 log = corect.utils.get_logger()
 
-class CORECT(nn.Module):
+class CORECT_real(nn.Module):
     def __init__(self, args):
-        super(CORECT, self).__init__()
+        super(CORECT_real, self).__init__()
 
         self.args = args
         self.wp = args.wp
@@ -36,7 +36,7 @@ class CORECT(nn.Module):
                 ic_dim *= args.graph_transformer_nheads
         
         if args.use_crossmodal and self.n_modals > 1:
-            ic_dim += h_dim * self.n_modals
+            ic_dim += h_dim * self.n_modals * (self.n_modals-1)
 
         if self.args.no_gnn and (not self.args.use_crossmodal or self.n_modals == 1):
             ic_dim = h_dim * self.n_modals
@@ -84,8 +84,8 @@ class CORECT(nn.Module):
             print('RTGraph --> Use GNN')
 
         if args.use_crossmodal and self.n_modals > 1:
-            # self.crossmodal = CrossmodalNet(g_dim, args)
-            self.crossmodal = MMTLayer(input_dim=[100,100,100], rank = 11, n_modals=2, beta=0.7)
+            self.crossmodal = CrossmodalNet(g_dim, args)
+            # self.crossmodal = MMTLayer(input_dim=[100,100,100], rank = 11, n_modals=3, beta=0.7)
             print('RTGraph --> Use Crossmodal')
         elif self.n_modals == 1:
             print('RTGraph --> Crossmodal not available when number of modalitiy is 1')
@@ -135,7 +135,7 @@ class CORECT(nn.Module):
         if self.args.use_crossmodal and self.n_modals > 1:
             out_cr = self.crossmodal(multimodal_features)
             # print((out_cr[2].shape))
-            out_cr = torch.cat(out_cr, dim=2)
+            out_cr = out_cr.permute(1, 0, 2)
             # print(out_cr.shape)
             # out_cr = out_cr.permute(1, 0, 2)
             lengths = data['text_len_tensor']
