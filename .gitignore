@@ -132,4 +132,5 @@ dmypy.json
 # Other
 *.pt
 
+data/meld
 data/mosei/mosei_data.pkl

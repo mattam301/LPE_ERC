@@ -4,7 +4,12 @@ import torch
 
 import numpy as np
 
-
+def revert_one_hot(one_hot_list):
+    normal_numbers = []
+    for one_hot in one_hot_list:
+        # Find the index of the 1, which represents the original number
+        normal_numbers.append(one_hot.index(1))
+    return normal_numbers
 class Dataset:
     def __init__(self, samples, args) -> None:
         self.samples = samples
@@ -59,9 +64,11 @@ class Dataset:
             audio_tensor[i, :cur_len, :] = tmp_a
             visual_tensor[i, :cur_len, :] = tmp_v
 
-            # print(s['speakers'])
+            # print(type(s['speakers']))
             if self.dataset=="iemocap_roberta" or self.dataset=="mosei":
                 speaker_tensor[i, :cur_len] = torch.tensor(s["speakers"])
+            elif self.dataset=="meld":
+                speaker_tensor[i, :cur_len] = torch.Tensor(revert_one_hot(s['speakers']))
             else:
                 speaker_tensor[i, :cur_len] = torch.tensor(
                     [self.speaker_to_idx[c] for c in s["speakers"]])

@@ -28,6 +28,7 @@ class Coach:
             "iemocap_roberta": {"hap": 0, "sad": 1, "neu": 2, "ang": 3, "exc": 4, "fru": 5},
             "iemocap_4": {"hap": 0, "sad": 1, "neu": 2, "ang": 3},
             "mosei": {"Negative": 0, "Positive": 1},
+            "meld": {"hap": 0, "sad": 1, "neu": 2, "ang": 3, "exc": 4, "fru": 5, "dis": 6},
         }
 
         if args.emotion == "7class":
@@ -94,8 +95,7 @@ class Coach:
                 else:
                     torch.save(
                         {"args": self.args, "state_dict": self.model},
-                        self.args.data_root
-                        + "/model_checkpoints/"
+                        "model_checkpoints/"
                         + self.args.dataset
                         + "_best_dev_f1_model_"
                         + self.args.modalities

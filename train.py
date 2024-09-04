@@ -4,7 +4,8 @@ import argparse
 import torch
 import os
 import mat
-
+os.environ['CUDA_LAUNCH_BLOCKING']="1"
+os.environ['TORCH_USE_CUDA_DSA'] = "1"
 log = mat.utils.get_logger()
 
 def main(args):
@@ -36,7 +37,7 @@ def main(args):
 
     log.debug("Building model...")
     
-    model_file = args.data_root + "/model_checkpoints/model.pt"
+    model_file = "model_checkpoints/model.pt"
     model = mat.CORECT(args).to(args.device)
     opt = mat.Optim(args.learning_rate, args.max_grad_value, args.weight_decay)
     opt.set_parameters(model.parameters(), args.optimizer)
@@ -68,13 +69,13 @@ if __name__ == "__main__":
         "--dataset",
         type=str,
         # required=True,
-        default="iemocap_4",
-        choices=["iemocap", "iemocap_4","iemocap_gc","iemocap_roberta","mosei"],
+        default="meld",
+        choices=["iemocap", "iemocap_4","iemocap_gc","iemocap_roberta","mosei", "meld"],
         help="Dataset name.",
     )
 
     parser.add_argument(
-        "--data_dir_path", type=str, help="Dataset directory path", default="./data"
+        "--data_dir_path", type=str, help="Dataset directory path", default="data"
     )
 
     # Training parameters
@@ -86,7 +87,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--epochs", default=50, type=int, help="Number of training epochs."
     )
-    parser.add_argument("--batch_size", default=32, type=int, help="Batch size.")
+    parser.add_argument("--batch_size", default=2, type=int, help="Batch size.")
     parser.add_argument(
         "--optimizer",
         type=str,
@@ -110,7 +111,7 @@ if __name__ == "__main__":
         help="""If the norm of the gradient vector exceeds this,
                         normalize it to have the norm equal to max_grad_norm""",
     )
-    parser.add_argument("--drop_rate", type=float, default=0.5, help="Dropout rate.")
+    parser.add_argument("--drop_rate", type=float, default=0.1, help="Dropout rate.")
 
     # Model parameters
     parser.add_argument(
@@ -175,7 +176,7 @@ if __name__ == "__main__":
     parser.add_argument("--encoder_nlayers", type=int, default=2)
     parser.add_argument("--graph_transformer_nheads", type=int, default=7)
     parser.add_argument("--use_highway", action="store_true", default=False)
-    parser.add_argument("--seed", type=int, default=24, help="Random seed.")
+    parser.add_argument("--seed", type=int, default=42, help="Random seed.")
     parser.add_argument(
         "--log_in_comet",
         action="store_true",
@@ -196,7 +197,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--data_root",
         type=str,
-        default=".",
+        default="",
         help="data root of folder",
     )
 
@@ -210,7 +211,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--use_speaker",
         action="store_true",
-        default=True,
+        default=False,
         help="Use speakers attribute",
     )
 
@@ -263,7 +264,7 @@ if __name__ == "__main__":
         "--use_graph_pe",
         # action="store_true",
         type=str,
-        default="none",
+        default="laplacian",
         choices=("laplacian", "rw", "none"),
         help="type of positional encoding in GNN"
     )
@@ -271,7 +272,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--laplacian_k",
         type=int,
-        default=18,
+        default=2,
         help="number of smallest non-trivial eigenvectors to use for laplacian positional encoding"
     )
     parser.add_argument(
@@ -306,6 +307,11 @@ if __name__ == "__main__":
             "a": 512,
             "t": 768,
             "v": 1024,
+        },
+        "meld": {
+            "a": 300,
+            "t": 1024,
+            "v": 342,
         },
     }
     
