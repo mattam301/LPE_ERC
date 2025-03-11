@@ -8,13 +8,13 @@ from .CrossmodalNet import CrossmodalNet
 from .GraphModel import GraphModel
 from .functions import multi_concat, feature_packing
 from .MMT import MMT, MMTLayer, MMAttention
-import mat
+import MITPA
 
-log = mat.utils.get_logger()
+log = MITPA.utils.get_logger()
 
-class CORECT_real(nn.Module):
+class MITPA(nn.Module):
     def __init__(self, args):
-        super(CORECT_real, self).__init__()
+        super(MITPA, self).__init__()
 
         self.args = args
         self.wp = args.wp
@@ -35,10 +35,10 @@ class CORECT_real(nn.Module):
             if args.use_graph_transformer:
                 ic_dim *= args.graph_transformer_nheads
         
-        if args.use_crossmodal and self.n_modals > 1:
-            ic_dim += h_dim * self.n_modals * (self.n_modals-1)
+        if args.use_mmt and self.n_modals > 1:
+            ic_dim += h_dim * self.n_modals
 
-        if self.args.no_gnn and (not self.args.use_crossmodal or self.n_modals == 1):
+        if self.args.no_gnn and (not self.args.use_mmt or self.n_modals == 1):
             ic_dim = h_dim * self.n_modals
 
         
@@ -51,6 +51,7 @@ class CORECT_real(nn.Module):
             "iemocap_roberta":{"hap": 0, "sad": 1, "neu": 2, "ang": 3, "exc": 4, "fru": 5},
             "iemocap_4": {"hap": 0, "sad": 1, "neu": 2, "ang": 3},
             "mosei": {"Negative": 0, "Positive": 1},
+            "meld": {"hap": 0, "sad": 1, "neu": 2, "ang": 3, "exc": 4, "fru": 5, "dis": 6},
         }
 
         dataset_speaker_dict = {
@@ -58,6 +59,7 @@ class CORECT_real(nn.Module):
             "iemocap_roberta": 2,
             "iemocap_4": 2,
             "mosei":1,
+            "meld": 3,
         }
         
 
@@ -83,10 +85,10 @@ class CORECT_real(nn.Module):
             self.graph_model = GraphModel(g_dim, h_dim, h_dim, self.device, args)
             print('RTGraph --> Use GNN')
 
-        if args.use_crossmodal and self.n_modals > 1:
-            self.crossmodal = CrossmodalNet(g_dim, args)
-            # self.crossmodal = MMTLayer(input_dim=[100,100,100], rank = 11, n_modals=3, beta=0.7)
-            print('RTGraph --> Use Crossmodal')
+        if args.use_mmt and self.n_modals > 1:
+            # self.crossmodal = CrossmodalNet(g_dim, args)
+            self.crossmodal = MMTLayer(input_dim=[100,100,100], rank = 50, n_modals=3, beta=0.7)
+            print('--> Use MMT')
         elif self.n_modals == 1:
             print('RTGraph --> Crossmodal not available when number of modalitiy is 1')
 
@@ -132,10 +134,10 @@ class CORECT_real(nn.Module):
             out.append(out_graph)
 
 
-        if self.args.use_crossmodal and self.n_modals > 1:
+        if self.args.use_mmt and self.n_modals > 1:
             out_cr = self.crossmodal(multimodal_features)
             # print((out_cr[2].shape))
-            out_cr = out_cr.permute(1, 0, 2)
+            out_cr = torch.cat(out_cr, dim=2)
             # print(out_cr.shape)
             # out_cr = out_cr.permute(1, 0, 2)
             lengths = data['text_len_tensor']
@@ -152,7 +154,7 @@ class CORECT_real(nn.Module):
             
             # out.append(out_cr)
         
-        if self.args.no_gnn and (not self.args.use_crossmodal or self.n_modals == 1):
+        if self.args.no_gnn and (not self.args.use_mmt or self.n_modals == 1):
             out = out_encode
         else:
             out = torch.cat(out, dim=-1)

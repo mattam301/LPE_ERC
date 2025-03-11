@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import numpy as np
-import mat
+import MITPA
 
 from .GNN import GNN
 from .functions import multi_concat, feature_packing

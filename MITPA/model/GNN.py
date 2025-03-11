@@ -4,7 +4,7 @@ from torch_geometric.transforms import AddLaplacianEigenvectorPE, AddRandomWalkP
 from torch_geometric.data import Data as GraphData
 from torch_geometric.nn import RGCNConv, TransformerConv
 
-import mat
+import MITPA
 
 class GNN(nn.Module):
     def __init__(self, g_dim, h1_dim, h2_dim, num_relations, num_modals, args):

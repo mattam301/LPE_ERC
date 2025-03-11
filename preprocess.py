@@ -6,14 +6,14 @@ import pickle
 import os
 import numpy as np
 from sentence_transformers import SentenceTransformer
-import mat
+import MITPA
 
 
-log = mat.utils.get_logger()
+log = MITPA.utils.get_logger()
 sbert_model = SentenceTransformer("paraphrase-distilroberta-base-v1")
 
 def get_iemocap():
-    mat.utils.set_seed(args.seed)
+    MITPA.utils.set_seed(args.seed)
 
     if args.dataset == "iemocap":
         (
@@ -96,7 +96,7 @@ def get_iemocap():
 def get_mosei():
 
     mosei_path = args.data_dir
-    mat.utils.set_seed(args.seed)
+    MITPA.utils.set_seed(args.seed)
 
     feature_path = "categorical.p"
     path = os.path.join(mosei_path, feature_path)
@@ -122,7 +122,7 @@ def get_mosei():
 
     for vid in tqdm(train_vids, desc="train"):
         train.append(
-            mat.Sample(
+            MITPA.Sample(
                 vid,
                 video_speakers[vid],
                 video_labels[vid],
@@ -137,7 +137,7 @@ def get_mosei():
 
     for vid in tqdm(dev_vids, desc="dev"):
         dev.append(
-            mat.Sample(
+            MITPA.Sample(
                 vid,
                 video_speakers[vid],
                 video_labels[vid],
@@ -149,7 +149,7 @@ def get_mosei():
         )
     for vid in tqdm(test_vids, desc="test"):
         test.append(
-            mat.Sample(
+            MITPA.Sample(
                 vid,
                 video_speakers[vid],
                 video_labels[vid],
@@ -179,11 +179,11 @@ def main(args):
     if args.dataset == "iemocap":
         train, dev, test = get_iemocap()
         data = {"train": train, "dev": dev, "test": test}
-        mat.utils.save_pkl(data, args.data_root + "/data/iemocap/data_iemocap.pkl")
+        MITPA.utils.save_pkl(data, args.data_root + "/data/iemocap/data_iemocap.pkl")
     if args.dataset == "iemocap_4":
         train, dev, test = get_iemocap()
         data = {"train": train, "dev": dev, "test": test}
-        mat.utils.save_pkl(data, args.data_root + "/data/iemocap_4/data_iemocap_4.pkl")
+        MITPA.utils.save_pkl(data, args.data_root + "/data/iemocap_4/data_iemocap_4.pkl")
 
 
     log.info("number of train samples: {}".format(len(train)))

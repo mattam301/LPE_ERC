@@ -6,9 +6,9 @@ from numpy.core import overrides
 import torch
 from tqdm import tqdm
 from sklearn import metrics
-import mat
+import MITPA
 
-log = mat.utils.get_logger()
+log = MITPA.utils.get_logger()
 
 
 class Coach:
@@ -21,7 +21,7 @@ class Coach:
         self.scheduler = sched
         self.args = args
         if args.log_in_comet:
-            self.experiment = mat.Logger()
+            self.experiment = MITPA.Logger()
 
         self.dataset_label_dict = {
             "iemocap": {"hap": 0, "sad": 1, "neu": 2, "ang": 3, "exc": 4, "fru": 5},
@@ -160,21 +160,54 @@ class Coach:
         dev_loss = 0
         dataset = self.testset if test else self.devset
         self.model.eval()
+        error_analysis = []  # To store errors for analysis
+
         with torch.no_grad():
             golds = []
             preds = []
             for idx in tqdm(range(len(dataset)), desc="test" if test else "dev"):
                 data = dataset[idx]
+                print("len of data sample")
                 golds.append(data["label_tensor"])
+            
+                # utterance_text = data["utterance_texts"][0]
+                utterance_text = [item for sublist in data["utterance_texts"] for item in sublist]
+
+ 
                 for k, v in data.items():
                     if not k == "utterance_texts":
                         data[k] = v.to(self.args.device)
                 y_hat = self.model(data)
                 preds.append(y_hat.detach().to("cpu"))
+                # print("len of pred: ", len(preds))
                 nll = self.model.get_loss(data)
                 dev_loss += nll.item()
 
-            
+                # Store errors for analysis
+                # if test or not torch.equal(data["label_tensor"], y_hat.argmax(dim=-1).to(data["label_tensor"].device)):
+                # print("Text: ", type(utterance_text))
+                # print("Labels: ", type(data["label_tensor"].item()))
+                # print("Preds: ", type(y_hat.item()))
+                # print(hihi)
+                error_analysis.append({
+                    "textual_modality_utterance": utterance_text,
+                    "label": data["label_tensor"],
+                    "prediction": y_hat
+                })
+
+            processed_data = []
+            for entry in error_analysis:
+                text_list = entry["textual_modality_utterance"]
+                label_list = entry["label"].tolist()
+                prediction_list = entry["prediction"].tolist()
+
+                # Ensure lengths match
+                assert len(text_list) == len(label_list) == len(prediction_list), "Mismatched lengths!"
+
+                # Append each word-label-prediction as a separate row
+                for word, label, pred in zip(text_list, label_list, prediction_list):
+                    processed_data.append({"Text": word, "Label": label, "Prediction": pred})
+
             golds = torch.cat(golds, dim=-1).numpy()
             preds = torch.cat(preds, dim=-1).numpy()
             f1 = metrics.f1_score(golds, preds, average="weighted")
@@ -185,9 +218,6 @@ class Coach:
                         golds, preds, target_names=self.label_to_idx.keys(), digits=4
                     )
                 )
-
-
-
                 if self.args.log_in_comet:
                     self.experiment.log_confusion_matrix(
                         golds,
@@ -195,5 +225,14 @@ class Coach:
                         labels=list(self.label_to_idx.keys()),
                         overwrite=True,
                     )
+
+        # Dump error analysis to a file
+        import pandas as pd
+        error_analysis_file = "error_analysis_{}.xlsx".format("test" if test else "dev")
+        error_analysis_file = f"dump/{f1}_" + error_analysis_file
+        df = pd.DataFrame(processed_data)
+        # df.to_excel(error_analysis_file)
+        
+        # print(f"Error analysis saved to {error_analysis_file}")
 
         return f1, dev_loss

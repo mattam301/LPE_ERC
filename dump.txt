@@ -1,0 +1,810 @@
+Seed set 42
+11/27/2024 08:57:57 Loaded data.
+UnimodalEncoder --> Use transformer
+iemocap speakers: 2
+GraphModel --> Edge type: temp_multi
+GraphModel --> Window past: 11
+GraphModel --> Window future: 9
+GNN --> Use Laplacian PE
+GNN --> Use RGCN
+GNN --> Use Graph Transformer
+RTGraph --> Use GNN
+RTGraph --> Use Crossmodal
+Using Scheduler
+11/27/2024 08:58:00 Start training...
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+11/27/2024 08:58:08 
+11/27/2024 08:58:08 [Epoch 1] [Loss: 193.269046] [Time: 7.683919]
+data sample:  30
+check the number of utterance 30
+length of pe:  0
+---
+len of pred:  1
+length of pe:  0
+---
+Text:  30
+Labels:  30
+Preds:  30
+data sample:  18
+check the number of utterance 18
+length of pe:  0
+---
+len of pred:  2
+length of pe:  0
+---
+Text:  18
+Labels:  18
+Preds:  18
+data sample:  49
+check the number of utterance 49
+length of pe:  0
+---
+len of pred:  3
+length of pe:  0
+---
+Text:  49
+Labels:  49
+Preds:  49
+data sample:  53
+check the number of utterance 53
+length of pe:  0
+---
+len of pred:  4
+length of pe:  0
+---
+Text:  53
+Labels:  53
+Preds:  53
+data sample:  51
+check the number of utterance 51
+length of pe:  0
+---
+len of pred:  5
+length of pe:  0
+---
+Text:  51
+Labels:  51
+Preds:  51
+data sample:  54
+check the number of utterance 54
+length of pe:  0
+---
+len of pred:  6
+length of pe:  0
+---
+Text:  54
+Labels:  54
+Preds:  54
+data sample:  69
+check the number of utterance 69
+length of pe:  0
+---
+len of pred:  7
+length of pe:  0
+---
+Text:  69
+Labels:  69
+Preds:  69
+data sample:  63
+check the number of utterance 63
+length of pe:  0
+---
+len of pred:  8
+length of pe:  0
+---
+Text:  63
+Labels:  63
+Preds:  63
+data sample:  79
+check the number of utterance 79
+length of pe:  0
+---
+len of pred:  9
+length of pe:  0
+---
+Text:  79
+Labels:  79
+Preds:  79
+data sample:  110
+check the number of utterance 110
+length of pe:  0
+---
+len of pred:  10
+length of pe:  0
+---
+Text:  110
+Labels:  110
+Preds:  110
+data sample:  26
+check the number of utterance 26
+length of pe:  0
+---
+len of pred:  11
+length of pe:  0
+---
+Text:  26
+Labels:  26
+Preds:  26
+data sample:  62
+check the number of utterance 62
+length of pe:  0
+---
+len of pred:  12
+length of pe:  0
+---
+Text:  62
+Labels:  62
+Preds:  62
+Error analysis saved to error_analysis_dev.xlsx
+data sample:  59
+check the number of utterance 59
+length of pe:  0
+---
+len of pred:  1
+length of pe:  0
+---
+Text:  59
+Labels:  59
+Preds:  59
+data sample:  29
+check the number of utterance 29
+length of pe:  0
+---
+len of pred:  2
+length of pe:  0
+---
+Text:  29
+Labels:  29
+Preds:  29
+data sample:  44
+check the number of utterance 44
+length of pe:  0
+---
+len of pred:  3
+length of pe:  0
+---
+Text:  44
+Labels:  44
+Preds:  44
+data sample:  28
+check the number of utterance 28
+length of pe:  0
+---
+len of pred:  4
+length of pe:  0
+---
+Text:  28
+Labels:  28
+Preds:  28
+data sample:  91
+check the number of utterance 91
+length of pe:  0
+---
+len of pred:  5
+length of pe:  0
+---
+Text:  91
+Labels:  91
+Preds:  91
+data sample:  23
+check the number of utterance 23
+length of pe:  0
+---
+len of pred:  6
+length of pe:  0
+---
+Text:  23
+Labels:  23
+Preds:  23
+data sample:  84
+check the number of utterance 84
+length of pe:  0
+---
+len of pred:  7
+length of pe:  0
+---
+Text:  84
+Labels:  84
+Preds:  84
+data sample:  54
+check the number of utterance 54
+length of pe:  0
+---
+len of pred:  8
+length of pe:  0
+---
+Text:  54
+Labels:  54
+Preds:  54
+data sample:  59
+check the number of utterance 59
+length of pe:  0
+---
+len of pred:  9
+length of pe:  0
+---
+Text:  59
+Labels:  59
+Preds:  59
+data sample:  59
+check the number of utterance 59
+length of pe:  0
+---
+len of pred:  10
+length of pe:  0
+---
+Text:  59
+Labels:  59
+Preds:  59
+data sample:  75
+check the number of utterance 75
+length of pe:  0
+---
+len of pred:  11
+length of pe:  0
+---
+Text:  75
+Labels:  75
+Preds:  75
+data sample:  64
+check the number of utterance 64
+length of pe:  0
+---
+len of pred:  12
+length of pe:  0
+---
+Text:  64
+Labels:  64
+Preds:  64
+data sample:  42
+check the number of utterance 42
+length of pe:  0
+---
+len of pred:  13
+length of pe:  0
+---
+Text:  42
+Labels:  42
+Preds:  42
+data sample:  58
+check the number of utterance 58
+length of pe:  0
+---
+len of pred:  14
+length of pe:  0
+---
+Text:  58
+Labels:  58
+Preds:  58
+data sample:  43
+check the number of utterance 43
+length of pe:  0
+---
+len of pred:  15
+length of pe:  0
+---
+Text:  43
+Labels:  43
+Preds:  43
+data sample:  49
+check the number of utterance 49
+length of pe:  0
+---
+len of pred:  16
+length of pe:  0
+---
+Text:  49
+Labels:  49
+Preds:  49
+data sample:  43
+check the number of utterance 43
+length of pe:  0
+---
+len of pred:  17
+length of pe:  0
+---
+Text:  43
+Labels:  43
+Preds:  43
+data sample:  83
+check the number of utterance 83
+length of pe:  0
+---
+len of pred:  18
+length of pe:  0
+---
+Text:  83
+Labels:  83
+Preds:  83
+data sample:  52
+check the number of utterance 52
+length of pe:  0
+---
+len of pred:  19
+length of pe:  0
+---
+Text:  52
+Labels:  52
+Preds:  52
+data sample:  58
+check the number of utterance 58
+length of pe:  0
+---
+len of pred:  20
+length of pe:  0
+---
+Text:  58
+Labels:  58
+Preds:  58
+data sample:  37
+check the number of utterance 37
+length of pe:  0
+---
+len of pred:  21
+length of pe:  0
+---
+Text:  37
+Labels:  37
+Preds:  37
+data sample:  43
+check the number of utterance 43
+length of pe:  0
+---
+len of pred:  22
+length of pe:  0
+---
+Text:  43
+Labels:  43
+Preds:  43
+data sample:  34
+check the number of utterance 34
+length of pe:  0
+---
+len of pred:  23
+length of pe:  0
+---
+Text:  34
+Labels:  34
+Preds:  34
+data sample:  44
+check the number of utterance 44
+length of pe:  0
+---
+len of pred:  24
+length of pe:  0
+---
+Text:  44
+Labels:  44
+Preds:  44
+data sample:  44
+check the number of utterance 44
+length of pe:  0
+---
+len of pred:  25
+length of pe:  0
+---
+Text:  44
+Labels:  44
+Preds:  44
+data sample:  53
+check the number of utterance 53
+length of pe:  0
+---
+len of pred:  26
+length of pe:  0
+---
+Text:  53
+Labels:  53
+Preds:  53
+data sample:  40
+check the number of utterance 40
+length of pe:  0
+---
+len of pred:  27
+length of pe:  0
+---
+Text:  40
+Labels:  40
+Preds:  40
+data sample:  68
+check the number of utterance 68
+length of pe:  0
+---
+len of pred:  28
+length of pe:  0
+---
+Text:  68
+Labels:  68
+Preds:  68
+data sample:  83
+check the number of utterance 83
+length of pe:  0
+---
+len of pred:  29
+length of pe:  0
+---
+Text:  83
+Labels:  83
+Preds:  83
+data sample:  52
+check the number of utterance 52
+length of pe:  0
+---
+len of pred:  30
+length of pe:  0
+---
+Text:  52
+Labels:  52
+Preds:  52
+data sample:  28
+check the number of utterance 28
+length of pe:  0
+---
+len of pred:  31
+length of pe:  0
+---
+Text:  28
+Labels:  28
+Preds:  28
+              precision    recall  f1-score   support
+
+         hap     0.0000    0.0000    0.0000       144
+         sad     0.1297    0.4612    0.2025       245
+         neu     0.0000    0.0000    0.0000       384
+         ang     0.0000    0.0000    0.0000       170
+         exc     0.0000    0.0000    0.0000       299
+         fru     0.2144    0.4226    0.2845       381
+
+    accuracy                         0.1688      1623
+   macro avg     0.0574    0.1473    0.0812      1623
+weighted avg     0.0699    0.1688    0.0973      1623
+
+Error analysis saved to error_analysis_test.xlsx
+11/27/2024 08:58:11 [Dev set] [f1 0.0739]
+11/27/2024 08:58:11 Save the best model.
+11/27/2024 08:58:11 [Test set] [f1 0.0973]
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---
+length of pe:  0
+---

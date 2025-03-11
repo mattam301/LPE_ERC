@@ -3,13 +3,13 @@ from comet_ml import Experiment, Optimizer
 import argparse
 import torch
 import os
-import mat
+import MITPA
 os.environ['CUDA_LAUNCH_BLOCKING']="1"
 os.environ['TORCH_USE_CUDA_DSA'] = "1"
-log = mat.utils.get_logger()
+log = MITPA.utils.get_logger()
 
 def main(args):
-    mat.utils.set_seed(args.seed)
+    MITPA.utils.set_seed(args.seed)
 
     if args.emotion:
         args.data = os.path.join(
@@ -19,31 +19,31 @@ def main(args):
             "data_" + args.dataset + ".pkl",
         )
         log.debug("Loading data from '%s'." % args.data)
-        data = mat.utils.load_mosei(args.emotion)
+        data = MITPA.utils.load_mosei(args.emotion)
     else:
         args.data = os.path.join(
             args.data_root, args.data_dir_path, args.dataset, "data_" + args.dataset + ".pkl"
         )
         log.debug("Loading data from '%s'." % args.data)
-        data = mat.utils.load_pkl(args.data)
+        data = MITPA.utils.load_pkl(args.data)
 
     # load data
     
     log.info("Loaded data.")
 
-    trainset = mat.Dataset(data["train"], args)
-    devset = mat.Dataset(data["dev"], args)
-    testset = mat.Dataset(data["test"], args)
+    trainset = MITPA.Dataset(data["train"], args)
+    devset = MITPA.Dataset(data["dev"], args)
+    testset = MITPA.Dataset(data["test"], args)
 
     log.debug("Building model...")
     
     model_file = "model_checkpoints/model.pt"
-    model = mat.CORECT(args).to(args.device)
-    opt = mat.Optim(args.learning_rate, args.max_grad_value, args.weight_decay)
+    model = MITPA.MITPA(args).to(args.device)
+    opt = MITPA.Optim(args.learning_rate, args.max_grad_value, args.weight_decay)
     opt.set_parameters(model.parameters(), args.optimizer)
     sched = opt.get_scheduler(args.scheduler)
 
-    coach = mat.Coach(trainset, devset, testset, model, opt, sched, args)
+    coach = MITPA.Coach(trainset, devset, testset, model, opt, sched, args)
     if not args.from_begin:
         ckpt = torch.load(model_file)
         coach.load_ckpt(ckpt)
@@ -87,7 +87,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--epochs", default=50, type=int, help="Number of training epochs."
     )
-    parser.add_argument("--batch_size", default=2, type=int, help="Batch size.")
+    parser.add_argument("--batch_size", default=10, type=int, help="Batch size.")
     parser.add_argument(
         "--optimizer",
         type=str,
@@ -117,13 +117,13 @@ if __name__ == "__main__":
     parser.add_argument(
         "--wp",
         type=int,
-        default=11,
+        default=4,
         help="Past context window size. Set wp to -1 to use all the past context.",
     )
     parser.add_argument(
         "--wf",
         type=int,
-        default=9,
+        default=4,
         help="Future context window size. Set wp to -1 to use all the future context.",
     )
     
@@ -272,7 +272,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--laplacian_k",
         type=int,
-        default=2,
+        default=0,
         help="number of smallest non-trivial eigenvectors to use for laplacian positional encoding"
     )
     parser.add_argument(
@@ -318,7 +318,7 @@ if __name__ == "__main__":
     log.debug(args)
 
     if args.log_in_comet:
-        experiment = mat.Logger(
+        experiment = MITPA.Logger(
                 api_key=args.comet_api_key,
                 project_name="nckh",
                 workspace=args.comet_workspace,
